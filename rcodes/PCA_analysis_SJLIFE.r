@@ -140,6 +140,7 @@ p.sd
 
 PCA.SJLIFE <- PCA[PCA$Population == "SJLIFE",]
 
+# We will keep samples within 3SD
 SD.cutoff <- 3 
 ## AFRICAN
 PC1min <- (mean(AA_SAMPLES_AFR$PC1) - (SD.cutoff*sd(AA_SAMPLES_AFR$PC1)))
@@ -147,7 +148,7 @@ PC1max <- (mean(AA_SAMPLES_AFR$PC1) + (SD.cutoff*sd(AA_SAMPLES_AFR$PC1)))
 PC2min <- (mean(AA_SAMPLES_AFR$PC2) - (SD.cutoff*sd(AA_SAMPLES_AFR$PC2)))
 PC2max <- (mean(AA_SAMPLES_AFR$PC2) + (SD.cutoff*sd(AA_SAMPLES_AFR$PC2)))
 
-# For African American, we will keep the subset in the shaded region within the blue rectangle
+# For African American"
 SELECTED.p <- p.sd + annotate("rect", xmin=PC1min, xmax=PC1max, ymin=PC2min, ymax=PC2max, 
                                               colour="blue", alpha = .3) 
 PCA.AFR <- PCA.SJLIFE[PCA.SJLIFE$PC1 > PC1min &
@@ -169,7 +170,7 @@ PC1max <- (mean(ASIAN_SAMPLES_EAS$PC1) + (SD.cutoff*sd(ASIAN_SAMPLES_EAS$PC1)))
 PC2min <- (mean(ASIAN_SAMPLES_EAS$PC2) - (SD.cutoff*sd(ASIAN_SAMPLES_EAS$PC2)))
 PC2max <- (mean(ASIAN_SAMPLES_EAS$PC2) + (SD.cutoff*sd(ASIAN_SAMPLES_EAS$PC2)))
 
-# For Asian, we will keep the subset in the shaded green square because the center of SD is a little bit displaced from our center
+# For Asian:
 SELECTED.p <- SELECTED.p + annotate("rect", xmin=PC1min, xmax=PC1max, ymin=PC2min, ymax=PC2max, 
                                     colour="blue", alpha = .3) 
 
@@ -193,7 +194,7 @@ PC1max <- (mean(NHW_SAMPLES_EUR$PC1) + (SD.cutoff*sd(NHW_SAMPLES_EUR$PC1)))
 PC2min <- (mean(NHW_SAMPLES_EUR$PC2) - (SD.cutoff*sd(NHW_SAMPLES_EUR$PC2)))
 PC2max <- (mean(NHW_SAMPLES_EUR$PC2) + (SD.cutoff*sd(NHW_SAMPLES_EUR$PC2)))
 
-# For EUR, we will keep samples within 5SD
+# For EUR:
 SELECTED.p <- SELECTED.p + annotate("rect", xmin=PC1min, xmax=PC1max, ymin=PC2min, ymax=PC2max, 
                                     colour="blue", alpha = .3) 
 
@@ -220,13 +221,13 @@ ggsave("SJLIFE-ALL-COHORT-3-5SD-plot.jpg", plot = SELECTED.p, device = NULL, sca
 # read admixture results file
 admixture.df <- read.table("Z:/ResearchHome/Groups/sapkogrp/projects/SJLIFE_WGS/common/sjlife/MERGED_SJLIFE_1_2/MERGED_SJLIFE_PLINK_PER_CHR/final.5.Q_header2_SJLIFE_only", header = T )
 
-# Recode ethnicities based on 80% or hiher cutoff; if nor column value is greater than 80%, insert MIX
+# Recode ethnicity based on 80% or hiher cutoff; if nor column value is greater than 80%, insert MIX
 admixture.df$Ethnicity.80perc <- names(admixture.df)[-1][max.col(admixture.df[-1] > 0.8)]
 admixture.df$Ethnicity.80perc[!rowSums(admixture.df[2:6] > 0.8)] <- "MIX"
 
 
 
-## PCA ethnicities based on 3SD cutoff
+## PCA ethnicity based on 3SD cutoff
 PCA.Ethnicities <- rbind.data.frame(PCA.EUR, PCA.AFR, PCA.EAS)
 table(PCA.Ethnicities$Ethnicity)
 # AFR  EAS  EUR 
