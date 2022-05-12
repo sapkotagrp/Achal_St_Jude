@@ -3,8 +3,10 @@
 ###########################################
 ## Helper script to convert VCF to plink ##
 ###########################################
-## Achal Neupane ##
+######################
+## Achal Neupane    ##
 ## Date: 04/25/2025 ##
+######################
 cd /research_jude/rgs01_jude/groups/sapkogrp/projects/SJLIFE_WGS/common/sjlife/MERGED_SJLIFE_1_2
 
 VERSION="1.0"
