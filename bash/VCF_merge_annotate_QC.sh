@@ -315,7 +315,10 @@ plink --memory 400000 --threads 24 --bfile ${BFILE} --allow-no-sex --cluster --g
 
 @@ Now I am using an R script I wrote to plot and select samples: PCA_analysis_SJLIFE.r
 
-## Extract samples for second round of PCA
+#########################
+## Cleaned PCA round 1 ##
+#########################
+## Extract samples for PCA with three ethnicities only
 BFILE="final"
 plink --memory 300000 --threads 24 --bfile ${BFILE} --keep samples.to.exclude.round2.pca.txt --make-bed --keep-allele-order --out ${BFILE}_cleaned1
 # 188445 variants loaded from .bim file.
@@ -351,3 +354,289 @@ plink --memory 400000 --threads 24 --bfile ${BFILE} --allow-no-sex --cluster --g
 # Relationship matrix calculation complete.
 # --pca: Results saved to final_cleaned1-PCAS.eigenval and
 # final_cleaned1-PCAS.eigenvec .
+
+
+#########################
+## Cleaned PCA round 2 ##
+#########################
+
+## Round 2 for per ethnicity from PCA
+## Extract samples for second round of PCA
+## EUR
+BFILE="final"
+plink --memory 300000 --threads 24 --bfile ${BFILE} --keep SJLIFE_EUR_Per_PCA.txt --make-bed --keep-allele-order --out ${BFILE}_EUR
+# 188445 variants loaded from .bim file.
+# 6985 people (0 males, 0 females, 6985 ambiguous) loaded from .fam.
+# Ambiguous sex IDs written to final_EUR.nosex .
+# --keep: 3439 people remaining.
+# Using 1 thread (no multithreaded calculations invoked.
+# Before main variant filters, 3439 founders and 0 nonfounders present.
+# Calculating allele frequencies... done.
+# Total genotyping rate in remaining samples is 0.999186.
+# 188445 variants and 3439 people pass filters and QC.
+# Note: No phenotypes present.
+# --make-bed to final_EUR.bed + final_EUR.bim + final_EUR.fam ... done.
+
+
+BFILE="final"
+plink --memory 300000 --threads 24 --bfile ${BFILE} --keep SJLIFE_AFR_Per_PCA.txt --make-bed --keep-allele-order --out ${BFILE}_AFR
+# 188445 variants loaded from .bim file.
+# 6985 people (0 males, 0 females, 6985 ambiguous) loaded from .fam.
+# Ambiguous sex IDs written to final_AFR.nosex .
+# --keep: 645 people remaining.
+# Using 1 thread (no multithreaded calculations invoked.
+# Before main variant filters, 645 founders and 0 nonfounders present.
+# Calculating allele frequencies... done.
+# Total genotyping rate in remaining samples is 0.999168.
+# 188445 variants and 645 people pass filters and QC.
+# Note: No phenotypes present.
+# --make-bed to final_AFR.bed + final_AFR.bim + final_AFR.fam ... done.
+
+
+
+BFILE="final"
+plink --memory 300000 --threads 24 --bfile ${BFILE} --keep SJLIFE_EAS_Per_PCA.txt --make-bed --keep-allele-order --out ${BFILE}_EAS
+# 188445 variants loaded from .bim file.
+# 6985 people (0 males, 0 females, 6985 ambiguous) loaded from .fam.
+# Ambiguous sex IDs written to final_EAS.nosex .
+# --keep: 16 people remaining.
+# Using 1 thread (no multithreaded calculations invoked.
+# Before main variant filters, 16 founders and 0 nonfounders present.
+# Calculating allele frequencies... done.
+# Total genotyping rate in remaining samples is 0.99966.
+# 188445 variants and 16 people pass filters and QC.
+# Note: No phenotypes present.
+# --make-bed to final_EAS.bed + final_EAS.bim + final_EAS.fam ... done.
+
+
+
+BFILE="final_EUR"
+plink --memory 400000 --threads 24 --bfile ${BFILE} --allow-no-sex --cluster --geno 0.05 --genome --hwe 1e-06 --ld-window-r2 0.2 --maf 0.05 --mds-plot 4 --min 0.2 --nonfounders --pca header --out ${BFILE}-PCAS_EUR
+# 188445 variants loaded from .bim file.
+# 3439 people (0 males, 0 females, 3439 ambiguous) loaded from .fam.
+# Ambiguous sex IDs written to final_EUR-PCAS_EUR.nosex .
+# Using up to 24 threads (change this with --threads).
+# Warning: This run includes BLAS/LAPACK linear algebra operations which
+# currently disregard the --threads limit.  If this is problematic, you may want
+# to recompile against single-threaded BLAS/LAPACK.
+# Before main variant filters, 3439 founders and 0 nonfounders present.
+# Calculating allele frequencies... done.
+# Total genotyping rate is 0.999186.
+# 0 variants removed due to missing genotype data (--geno).
+# --hwe: 30 variants removed due to Hardy-Weinberg exact test.
+# 7742 variants removed due to minor allele threshold(s)
+# (--maf/--max-maf/--mac/--max-mac).
+# 180673 variants and 3439 people pass filters and QC.
+# Note: No phenotypes present.
+# Relationship matrix calculation complete.
+# --pca: Results saved to final_EUR-PCAS_EUR.eigenval and
+# final_EUR-PCAS_EUR.eigenvec .
+
+
+BFILE="final_AFR"
+plink --memory 400000 --threads 24 --bfile ${BFILE} --allow-no-sex --cluster --geno 0.05 --genome --hwe 1e-06 --ld-window-r2 0.2 --maf 0.05 --mds-plot 4 --min 0.2 --nonfounders --pca header --out ${BFILE}-PCAS_AFR
+# 188445 variants loaded from .bim file.
+# 645 people (0 males, 0 females, 645 ambiguous) loaded from .fam.
+# Ambiguous sex IDs written to final_AFR-PCAS_AFR.nosex .
+# Using up to 24 threads (change this with --threads).
+# Warning: This run includes BLAS/LAPACK linear algebra operations which
+# currently disregard the --threads limit.  If this is problematic, you may want
+# to recompile against single-threaded BLAS/LAPACK.
+# Before main variant filters, 645 founders and 0 nonfounders present.
+# Calculating allele frequencies... done.
+# Total genotyping rate is 0.999168.
+# 20 variants removed due to missing genotype data (--geno).
+# --hwe: 63 variants removed due to Hardy-Weinberg exact test.
+# 53500 variants removed due to minor allele threshold(s)
+# (--maf/--max-maf/--mac/--max-mac).
+# 134862 variants and 645 people pass filters and QC.
+# Note: No phenotypes present.
+# Relationship matrix calculation complete.
+# --pca: Results saved to final_AFR-PCAS_AFR.eigenval and
+# final_AFR-PCAS_AFR.eigenvec .
+# IBD calculations complete.
+# Finished writing final_AFR-PCAS_AFR.genome .
+# Clustering... done.
+# Cluster solution written to final_AFR-PCAS_AFR.cluster1 ,
+# final_AFR-PCAS_AFR.cluster2 , and final_AFR-PCAS_AFR.cluster3 .
+# Performing multidimensional scaling analysis (SVD algorithm, 4
+# dimensions)... done.
+
+
+BFILE="final_EAS"
+plink --memory 400000 --threads 24 --bfile ${BFILE} --allow-no-sex --cluster --geno 0.05 --genome --hwe 1e-06 --ld-window-r2 0.2 --maf 0.05 --mds-plot 4 --min 0.2 --nonfounders --pca header --out ${BFILE}-PCAS_EAS
+# 188445 variants loaded from .bim file.
+# 16 people (0 males, 0 females, 16 ambiguous) loaded from .fam.
+# Ambiguous sex IDs written to final_EAS-PCAS_EAS.nosex .
+# Using up to 24 threads (change this with --threads).
+# Warning: This run includes BLAS/LAPACK linear algebra operations which
+# currently disregard the --threads limit.  If this is problematic, you may want
+# to recompile against single-threaded BLAS/LAPACK.
+# Before main variant filters, 16 founders and 0 nonfounders present.
+# Calculating allele frequencies... done.
+# Total genotyping rate is 0.99966.
+# 953 variants removed due to missing genotype data (--geno).
+# --hwe: 0 variants removed due to Hardy-Weinberg exact test.
+# 71544 variants removed due to minor allele threshold(s)
+# (--maf/--max-maf/--mac/--max-mac).
+# 115948 variants and 16 people pass filters and QC.
+# Note: No phenotypes present.
+# Relationship matrix calculation complete.
+# Warning: calculating 16 PCs, since there are only 16 samples.
+# --pca: Results saved to final_EAS-PCAS_EAS.eigenval and
+# final_EAS-PCAS_EAS.eigenvec .
+# IBD calculations complete.
+# Finished writing final_EAS-PCAS_EAS.genome .
+# Clustering... done.
+# Cluster solution written to final_EAS-PCAS_EAS.cluster1 ,
+# final_EAS-PCAS_EAS.cluster2 , and final_EAS-PCAS_EAS.cluster3 .
+# Performing multidimensional scaling analysis (SVD algorithm, 4
+# dimensions)... done.
+# MDS solution written to final_EAS-PCAS_EAS.mds .
+
+##################################
+## Repeat round 2 for Admixture ##
+##################################
+
+
+## Round 2 for per ethnicity from PCA
+## Extract samples for second round from Admixture
+## EUR
+BFILE="final"
+plink --memory 300000 --threads 24 --bfile ${BFILE} --keep SJLIFE_EUR_Per_ADMIXTURE.txt --make-bed --keep-allele-order --out ${BFILE}_EUR_ADMIXTURE
+# 188445 variants loaded from .bim file.
+# 6985 people (0 males, 0 females, 6985 ambiguous) loaded from .fam.
+# Ambiguous sex IDs written to final_EUR_ADMIXTURE.nosex .
+# --keep: 3423 people remaining.
+# Using 1 thread (no multithreaded calculations invoked.
+# Before main variant filters, 3423 founders and 0 nonfounders present.
+# Calculating allele frequencies... done.
+# Total genotyping rate in remaining samples is 0.999185.
+# 188445 variants and 3423 people pass filters and QC.
+# Note: No phenotypes present.
+# --make-bed to final_EUR_ADMIXTURE.bed + final_EUR_ADMIXTURE.bim +
+# final_EUR_ADMIXTURE.fam ... done.
+
+
+
+BFILE="final"
+plink --memory 300000 --threads 24 --bfile ${BFILE} --keep SJLIFE_AFR_Per_ADMIXTURE.txt --make-bed --keep-allele-order --out ${BFILE}_AFR_ADMIXTURE
+# 188445 variants loaded from .bim file.
+# 6985 people (0 males, 0 females, 6985 ambiguous) loaded from .fam.
+# Ambiguous sex IDs written to final_AFR_ADMIXTURE.nosex .
+# --keep: 592 people remaining.
+# Using 1 thread (no multithreaded calculations invoked.
+# Before main variant filters, 592 founders and 0 nonfounders present.
+# Calculating allele frequencies... done.
+# Total genotyping rate in remaining samples is 0.999131.
+# 188445 variants and 592 people pass filters and QC.
+# Note: No phenotypes present.
+# --make-bed to final_AFR_ADMIXTURE.bed + final_AFR_ADMIXTURE.bim +
+
+
+
+
+BFILE="final"
+plink --memory 300000 --threads 24 --bfile ${BFILE} --keep SJLIFE_EAS_Per_ADMIXTURE.txt --make-bed --keep-allele-order --out ${BFILE}_EAS_ADMIXTURE
+# 188445 variants loaded from .bim file.
+# 6985 people (0 males, 0 females, 6985 ambiguous) loaded from .fam.
+# Ambiguous sex IDs written to final_EAS_ADMIXTURE.nosex .
+# --keep: 21 people remaining.
+# Using 1 thread (no multithreaded calculations invoked.
+# Before main variant filters, 21 founders and 0 nonfounders present.
+# Calculating allele frequencies... done.
+# Total genotyping rate in remaining samples is 0.999665.
+# 188445 variants and 21 people pass filters and QC.
+# Note: No phenotypes present.
+# --make-bed to final_EAS_ADMIXTURE.bed + final_EAS_ADMIXTURE.bim +
+# final_EAS_ADMIXTURE.fam ... done.
+
+
+
+BFILE="final_EUR_ADMIXTURE"
+plink --memory 400000 --threads 24 --bfile ${BFILE} --allow-no-sex --cluster --geno 0.05 --genome --hwe 1e-06 --ld-window-r2 0.2 --maf 0.05 --mds-plot 4 --min 0.2 --nonfounders --pca header --out ${BFILE}-PCAS_EUR
+# 188445 variants loaded from .bim file.
+# 3423 people (0 males, 0 females, 3423 ambiguous) loaded from .fam.
+# Ambiguous sex IDs written to final_EUR_ADMIXTURE-PCAS_EUR.nosex .
+# Using up to 24 threads (change this with --threads).
+# Warning: This run includes BLAS/LAPACK linear algebra operations which
+# currently disregard the --threads limit.  If this is problematic, you may want
+# to recompile against single-threaded BLAS/LAPACK.
+# Before main variant filters, 3423 founders and 0 nonfounders present.
+# Calculating allele frequencies... done.
+# Total genotyping rate is 0.999185.
+# 0 variants removed due to missing genotype data (--geno).
+# --hwe: 31 variants removed due to Hardy-Weinberg exact test.
+# 7798 variants removed due to minor allele threshold(s)
+# (--maf/--max-maf/--mac/--max-mac).
+# 180616 variants and 3423 people pass filters and QC.
+# Note: No phenotypes present.
+# Relationship matrix calculation complete.
+# --pca: Results saved to final_EUR_ADMIXTURE-PCAS_EUR.eigenval and
+# final_EUR_ADMIXTURE-PCAS_EUR.eigenvec .
+
+
+
+BFILE="final_AFR_ADMIXTURE"
+plink --memory 400000 --threads 24 --bfile ${BFILE} --allow-no-sex --cluster --geno 0.05 --genome --hwe 1e-06 --ld-window-r2 0.2 --maf 0.05 --mds-plot 4 --min 0.2 --nonfounders --pca header --out ${BFILE}-PCAS_AFR
+# 188445 variants loaded from .bim file.
+# 592 people (0 males, 0 females, 592 ambiguous) loaded from .fam.
+# Ambiguous sex IDs written to final_AFR_ADMIXTURE-PCAS_AFR.nosex .
+# Using up to 24 threads (change this with --threads).
+# Warning: This run includes BLAS/LAPACK linear algebra operations which
+# currently disregard the --threads limit.  If this is problematic, you may want
+# to recompile against single-threaded BLAS/LAPACK.
+# Before main variant filters, 592 founders and 0 nonfounders present.
+# Calculating allele frequencies... done.
+# Total genotyping rate is 0.999131.
+# 23 variants removed due to missing genotype data (--geno).
+# --hwe: 56 variants removed due to Hardy-Weinberg exact test.
+# 53840 variants removed due to minor allele threshold(s)
+# (--maf/--max-maf/--mac/--max-mac).
+# 134526 variants and 592 people pass filters and QC.
+# Note: No phenotypes present.
+# Relationship matrix calculation complete.
+# --pca: Results saved to final_AFR_ADMIXTURE-PCAS_AFR.eigenval and
+# final_AFR_ADMIXTURE-PCAS_AFR.eigenvec .
+# IBD calculations complete.
+# Finished writing final_AFR_ADMIXTURE-PCAS_AFR.genome .
+# Clustering... done.
+# Cluster solution written to final_AFR_ADMIXTURE-PCAS_AFR.cluster1 ,
+# final_AFR_ADMIXTURE-PCAS_AFR.cluster2 , and
+# final_AFR_ADMIXTURE-PCAS_AFR.cluster3 .
+# Performing multidimensional scaling analysis (SVD algorithm, 4
+# dimensions)... done.
+# MDS solution written to final_AFR_ADMIXTURE-PCAS_AFR.mds .
+
+
+
+BFILE="final_EAS_ADMIXTURE"
+plink --memory 400000 --threads 24 --bfile ${BFILE} --allow-no-sex --cluster --geno 0.05 --genome --hwe 1e-06 --ld-window-r2 0.2 --maf 0.05 --mds-plot 4 --min 0.2 --nonfounders --pca header --out ${BFILE}-PCAS_EAS
+# 188445 variants loaded from .bim file.
+# 21 people (0 males, 0 females, 21 ambiguous) loaded from .fam.
+# Ambiguous sex IDs written to final_EAS_ADMIXTURE-PCAS_EAS.nosex .
+# Using up to 24 threads (change this with --threads).
+# Warning: This run includes BLAS/LAPACK linear algebra operations which
+# currently disregard the --threads limit.  If this is problematic, you may want
+# to recompile against single-threaded BLAS/LAPACK.
+# Before main variant filters, 21 founders and 0 nonfounders present.
+# Calculating allele frequencies... done.
+# Total genotyping rate is 0.999665.
+# 79 variants removed due to missing genotype data (--geno).
+# --hwe: 0 variants removed due to Hardy-Weinberg exact test.
+# 74651 variants removed due to minor allele threshold(s)
+# (--maf/--max-maf/--mac/--max-mac).
+# 113715 variants and 21 people pass filters and QC.
+# Note: No phenotypes present.
+# Relationship matrix calculation complete.
+# --pca: Results saved to final_EAS_ADMIXTURE-PCAS_EAS.eigenval and
+# final_EAS_ADMIXTURE-PCAS_EAS.eigenvec .
+# IBD calculations complete.
+# Finished writing final_EAS_ADMIXTURE-PCAS_EAS.genome .
+# Clustering... done.
+# Cluster solution written to final_EAS_ADMIXTURE-PCAS_EAS.cluster1 ,
+# final_EAS_ADMIXTURE-PCAS_EAS.cluster2 , and
+# final_EAS_ADMIXTURE-PCAS_EAS.cluster3 .
+# Performing multidimensional scaling analysis (SVD algorithm, 4
+# dimensions)... done.
+# MDS solution written to final_EAS_ADMIXTURE-PCAS_EAS.mds .
